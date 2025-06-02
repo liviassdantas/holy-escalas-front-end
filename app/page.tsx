@@ -1,103 +1,184 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import type React from "react"
+
+import { useState } from "react"
+import { ArrowLeft, Check, Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+export default function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    name: "Geovanna",
+    surname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="max-w-md mx-auto bg-white min-h-screen">
+      {/* Header */}
+      <div className="p-4 flex items-center">
+        <button className="mr-4">
+          <ArrowLeft className="h-6 w-6 text-gray-700" />
+        </button>
+        <h1 className="text-2xl font-medium text-teal-600">Criar novo cadastro</h1>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <form onSubmit={handleSubmit} className="px-4 pb-8">
+        {/* Profile Picture */}
+        <div className="flex flex-col items-center justify-center mb-6">
+          <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center mb-2">
+            <div className="w-20 h-20 rounded-full bg-gray-400"></div>
+          </div>
+          <button type="button" className="text-teal-600 font-medium">
+            Escolher foto
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        {/* Personal Information */}
+        <div className="space-y-4 mb-6">
+          <Input
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Nome"
+            className="border-teal-100 focus:border-teal-500 rounded-md"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <Input
+            name="surname"
+            value={formData.surname}
+            onChange={handleChange}
+            placeholder="Sobrenome"
+            className="border-teal-100 focus:border-teal-500 rounded-md"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+        </div>
+
+        {/* Team and Role Selection */}
+        <div className="space-y-4 mb-6">
+          <Select>
+            <SelectTrigger className="w-full border-teal-100 focus:border-teal-500 rounded-md">
+              <SelectValue placeholder="Selecione sua equipe" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="worship">Louvor</SelectItem>
+              <SelectItem value="tech">Técnica</SelectItem>
+              <SelectItem value="production">Produção</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select>
+            <SelectTrigger className="w-full border-teal-100 focus:border-teal-500 rounded-md">
+              <SelectValue placeholder="Selecione sua função" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="leader">Líder</SelectItem>
+              <SelectItem value="vocalist">Vocalista</SelectItem>
+              <SelectItem value="musician">Músico</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Music and Instrument */}
+        <div className="space-y-4 mb-6">
+          <Select defaultValue="music">
+            <SelectTrigger className="w-full border-teal-100 focus:border-teal-500 rounded-md">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="music">Música</SelectItem>
+              <SelectItem value="dance">Dança</SelectItem>
+              <SelectItem value="theater">Teatro</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select defaultValue="guitar">
+            <SelectTrigger className="w-full border-teal-100 focus:border-teal-500 rounded-md">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="guitar">Violão</SelectItem>
+              <SelectItem value="piano">Piano</SelectItem>
+              <SelectItem value="drums">Bateria</SelectItem>
+              <SelectItem value="bass">Baixo</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Social Media */}
+        <div className="space-y-4 mb-6">
+          <Select defaultValue="social">
+            <SelectTrigger className="w-full border-teal-100 focus:border-teal-500 rounded-md">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="social">Redes Sociais</SelectItem>
+              <SelectItem value="marketing">Marketing</SelectItem>
+              <SelectItem value="design">Design</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="w-full h-12 bg-gray-100 rounded-md flex items-center px-4 text-gray-400">
+            <span className="flex-1">Selecione sua função</span>
+            <Check className="h-5 w-5 text-teal-500 opacity-50" />
+          </div>
+        </div>
+
+        {/* Add Team/Function Button */}
+        <div className="mb-6">
+          <button type="button" className="flex items-center text-gray-700 font-medium">
+            <div className="w-6 h-6 rounded-full bg-orange-400 flex items-center justify-center mr-2">
+              <Plus className="h-4 w-4 text-white" />
+            </div>
+            Adicionar equipe/função
+          </button>
+        </div>
+
+        {/* Account Information */}
+        <div className="space-y-4 mb-8">
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="border-teal-100 focus:border-teal-500 rounded-md"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <Input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Senha"
+            className="border-teal-100 focus:border-teal-500 rounded-md"
+          />
+          <Input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            placeholder="Repetir senha"
+            className="border-teal-100 focus:border-teal-500 rounded-md"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600 text-white py-6 rounded-md">
+          Criar cadastro
+        </Button>
+      </form>
     </div>
-  );
+  )
 }
